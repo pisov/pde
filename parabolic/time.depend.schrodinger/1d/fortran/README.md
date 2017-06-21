@@ -1,19 +1,14 @@
 # This example demonstrate time evolution of wave packet
 #
-
-1. Compile the source code:
+# Compile the source code:
 
 gfortran -O3 tdse.f90 -o tdse.x -llapack
 
-or
-
-make
-
-2. Clear previous data files if any
+# Clear previous data files if any
 
 rm -f wf*
 
-3. Execute the program to evolve the wave function in time
+# Execute the program to evolve the wave function in time
 # Exeample input values
 # dx   = 0.01
 # dt   = 0.001
@@ -28,11 +23,11 @@ rm -f wf*
 
 ./tdse.x < input > energy.dat
 
-4. Create animation from generated wave function
+# Create animation from generated wave function
 
 ./makeanim.sh
 
-5. You can visualize the GIF animate sequence either using display coomand or any web browser
+# You can visualize the GIF animate sequence either using display coomand or any web browser
 
 display wf.gif 
 

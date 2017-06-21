@@ -73,7 +73,7 @@ steps = tout / dt
 
 !Calculate Factor multiplier
 
-Factor = dt 0.5d0 / Delta ** 2
+Factor = dt * 0.5d0 / Delta ** 2
 
 ! Allocate arrays Psi2D and Pot2D
 allocate(Psi2D(0:nx+1, 0:ny+1))
