@@ -1,52 +1,68 @@
-# This example demonstrate time evolution of wave packet
-#
+# Задача за решаване на време-зависимото урванение на Шрьодингер в двуметният случай
 
-1. Make own copy
 
+1. Напрваете собствено копие на изходният код на заготовката ```tdse_2d_template.f90```
+
+```
 cp tdse_2d_template.f90 tdse_2d.f90
+```
 
-2. Compile the source code:
+2. Компилирайте изходният код:
 
-
+```
 gfortran -c utils.f90
 gfortran -O3 tdse_2d.f90 utils.f90 -o tdse.x
+```
+или просто изпълнете:
 
-or
-
+```
 make
+```
 
-3. Clear previous data files if any
+3. ИЗтрийте всички файлове с данни (ако има такива) които съдържат вълновите функции от предишни изпълнения:
 
+```
 rm -f wf*
+```
 
-4. Execute the program to evolve the wave function in time
+4. Стартирайте програмата ```tdse.x``` в терминала като пренасочите входният файл с параметри ```input``` или въведете ръчно параметрите. Можете за използвате следните примерни стойности:
 
-# Exeample input values
-# dx   = 0.1
-# dt   = 0.0001
-# kx   = 5.0 
-# ky   = 0.0
-# Epot = 0.0 
-# T    = 10.0
-# Tout = 0.2
+```
+dx   = 0.1
+dt   = 0.0001
+kx   = 5.0 
+ky   = 0.0
+Epot = 0.0 
+T    = 10.0
+Tout = 0.2
+````
 
-
+```
 ./tdse.x 
+```
 
-# or use the initial data file input
+изпълнение на програмата с пренасочване на входният файл ```input```:
 
+```
 ./tdse.x < input 
-
-5. Create animation from generated wave function
+```
+5. Сктипта ```makeanim.sh``` ще генерира серия от изображения на времевата еволюция на вълновата функция като файлове в ```PPM``` формат. Накрая картинките ще се обединият в един общ анимиран ```GIF``` файл:
 
 ./makeanim.sh
 
-6. You can visualize the GIF animate sequence either using display coomand or any web browser
+6. Можете да визуализрата така създаденият анимиран файл ```wf.gif``` с помощта на някоя от следните команди:
 
+```
 display wf.gif 
+```
 
-or
+или
 
+```
 firefox file://./wf.gif
+```
+или
 
+```
 firefox file://./wf.mp4
+```
