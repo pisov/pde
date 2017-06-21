@@ -1,2 +1,6 @@
 *solution*
 solution/
+*.o
+*.x
+plot.dat
+*.mod
