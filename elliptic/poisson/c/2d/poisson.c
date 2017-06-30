@@ -30,6 +30,7 @@ int main() {
     uexact[i] = (double *) malloc((m+2) * sizeof(double));
   }
 
+  //Initialy set the work arrays uold and unew to zero
   for (i=0; i<n+1;i++) {
     for(j=0; j<m+2; j++) {
       uold[i][j] = 0.0f;
@@ -37,14 +38,18 @@ int main() {
      }
   }
 
+  //Set the domain boundaries
   xmin = 0.0f;
   xmax = 1.0f;
   ymin = 0.0f;
   ymax = 1.0f;
 
+  //Calculate the discretization step
   hx = (xmax - xmin) / (n+1);
   hy = (ymax - ymin) / (m+1);
 
+  //Initialyze the source function f(x) -> source
+  //Initialyze exact solution uexact
   for(i=1; i<=n;i++) {
     x = i * hx + xmin;
     for(j=1; j<=m; j++) {
@@ -53,36 +58,43 @@ int main() {
       uexact[i][j] = y * (1.0f - y) * pow(x, 3);
       uold[i][j] = source[i][j];
     }
-    uold[i][n+1] = y * (1.0f - y);
-    unew[i][n+1] = y * (1.0f - y);
   }
 
-  eps = 1.e-5;
-
-  diff = 0.0f;
-  for(i=1; i<=n;i++) {
-    for(j=1; j<=m; j++) {
-      diff += abs(unew[i][j]-uold[i][j]);
-    }
+  //Set boundary values for solution u(x) -> uold
+  for(j=1; j<=m; j++) {
+    y = j * hy + ymin;
+    uold[n+1][j] = y * (1.0f - y);
   }
+  //Set the error threshold for Jackobi iteration loop
+  eps = 1.e-5 ;
 
+  //Main Jackobi iteration loop
+  diff = 2 * eps;
+  iter = 1;
   while (diff > eps) {
-    //
-    //
-    //
+    //Apply one step of the solution
+    //and calculate the difference between new and old solution
+    //diff = unew - uold
     diff = 0.0f;
     for(i=1; i<=n;i++) {
       for(j=1; j<=m; j++) {
-        diff += abs(unew[i][j]-uold[i][j]);
+        //
+        //
+        //
+        diff += fabs(unew[i][j]-uold[i][j]);
       }
     }
+
+
+    //Copy new to old solution unew -> uold
     for(i=1; i<=n; i++) {
       memcpy(uold[i]+1, unew[i]+1, m * sizeof(double));
     }
-
+    //fprintf(stderr, "step: %4d diff: %20.15e\n", iter, diff);
+    iter += 1;
   }
 
-  fprintf(stderr, "Print the solution u(x, y) [%d, %d]\n",n, m);
+  //Print the solution
   for(i=1; i<=n;i++) {
     x = i * hx + xmin;
     for(j=1; j<=m; j++) {
